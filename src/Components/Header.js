@@ -2,7 +2,7 @@ import React from 'react'
 
 const Header = () => {   
   return (
-    <div className='flex w-full h-[70px]  pl-[20px] pt-[0px]  content-center items-center  justify-between'>
+    <div className='flex w-full h-[70px]  pl-[20px] pt-[0px]  content-center items-center justify-between'>
       <img className="h-[24px] "src="https://www.clipartmax.com/png/middle/333-3335189_menu-three-horizontal-lines-symbol-free-icon-logos-with-horizontal-lines.png" />
       <img className=' ml-[15px] w-[140px] object-cover h-[30px]' src={"https://as2.ftcdn.net/v2/jpg/04/76/41/47/1000_F_476414785_Qsbkvlr4AK0lvuKjSDlb7lfOY5oqwimn.jpg"} />
       <div className='flex w-full content-center items-center  justify-center pr-[30px]'>
