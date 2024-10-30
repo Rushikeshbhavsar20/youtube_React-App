@@ -13,7 +13,7 @@ const Maincontent = () => {
   return (
     <div className='flex  w-[96%] h-flex flex-col  border-2 border-blue-600 border-solid'>
        <Carousel />
-    <div className='flex flex-wrap  gap-5'>
+    <div className='flex flex-wrap  gap-1'>
      {items.map((item)=>{
           return <Cards  itemDetails={item}/> 
       })}
