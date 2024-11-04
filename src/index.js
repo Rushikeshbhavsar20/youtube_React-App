@@ -1,14 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-
+import { Provider } from 'react-redux';
 import reportWebVitals from './reportWebVitals';
 import Applayout from './Components/Applayout';
+import videoStore from './utils/useVideoStore';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <Provider store={videoStore} >
     <Applayout />
+    </Provider>
   </React.StrictMode>
 );
 
