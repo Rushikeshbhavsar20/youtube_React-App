@@ -1,19 +1,53 @@
-import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector,  } from 'react-redux'
 import { Toggleit } from '../utils/toggleSlice';
-
+import { addSuggestion } from '../utils/searchSlice';
 const Header = () => {   
     const dispatch = useDispatch();
+
     const handleClick = ()=>{
           dispatch(Toggleit())
     }
+
+    const[suggestion,setsuggestion] = useState("")
+
+
+    const handleChange = (e)=>{
+          setsuggestion(e.target.value)
+    }
+    
+    const fetchSuggestion = async()=>{
+      const data = await fetch(`http://suggestqueries.google.com/complete/search?client=firefox&ds=yt&q=${suggestion}`)
+      const json = await data.json()
+      const key = json[0]
+      const value = json[1]
+       if (value && value.length > 0) {
+        dispatch(addSuggestion({ key, value }));
+         }
+  
+      
+}
+
+    useEffect(()=>{
+       const timer = setTimeout(()=>{
+     
+        
+         fetchSuggestion()
+        
+       },200)       //using debouncing to fetch only if the time between two key press is less 200ms thus reducing the call of Api
+
+
+      return ()=>{
+         clearTimeout(timer)
+      }
+    },[suggestion])
 
   return (
     <div className='flex w-full h-[70px]  pl-[20px] pt-[0px]  content-center items-center justify-between'>
       <img  onClick={handleClick} className="h-[24px]  "   src="https://www.clipartmax.com/png/middle/333-3335189_menu-three-horizontal-lines-symbol-free-icon-logos-with-horizontal-lines.png" />
       <img className=' ml-[15px] w-[140px] object-cover h-[30px]' src={"https://as2.ftcdn.net/v2/jpg/04/76/41/47/1000_F_476414785_Qsbkvlr4AK0lvuKjSDlb7lfOY5oqwimn.jpg"} />
       <div className='flex w-full content-center items-center  justify-center pr-[30px]'>
-          <input  type='text' className=' w-6/12 h-[35px] border-2 rounded-tl-full rounded-bl-full border-[#e4e4e4] border-solid'   />
+          <input   onChange={handleChange} type='text' className=' p-2 w-6/12 h-[35px] border-2 rounded-tl-full rounded-bl-full border-[#e4e4e4] border-solid'   />
           <div className='w-[50px] h-[35px] bg-[#e4e4e4] rounded-tr-full rounded-br-full '> 
                 <svg className='pt-2' xmlns="http://www.w3.org/2000/svg" height="30" viewBox="0 0 24 24" width="45"><path d="m16.9994165 16.2923098 3.8541369 3.8541368c.1952621.1952622.1952621.5118446 0 .7071068-.1952622.1952621-.5118446.1952621-.7071068 0l-3.8541368-3.8541369c-1.4103486 1.2450743-3.2630999 2.0005835-5.2923098 2.0005835-4.418278 0-8-3.581722-8-8s3.581722-8 8-8 8 3.581722 8 8c0 2.0292099-.7555092 3.8819612-2.0005835 5.2923098zm-5.9994165 1.7076902c3.8659932 0 7-3.1340068 7-7 0-3.86599325-3.1340068-7-7-7-3.86599325 0-7 3.13400675-7 7 0 3.8659932 3.13400675 7 7 7z"/></svg>
           </div>

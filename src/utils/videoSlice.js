@@ -7,6 +7,7 @@ const videoSlice = createSlice({
       },
       reducers:{
         fetchData:(state,action)=>{
+          
             state.videoCat.push(action.payload)
         }
       }
